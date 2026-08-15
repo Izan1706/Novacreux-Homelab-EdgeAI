@@ -1,0 +1,3 @@
+opencv-python
+ollama
+hailo-python-api
