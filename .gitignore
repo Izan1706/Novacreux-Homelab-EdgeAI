@@ -1,0 +1,44 @@
+# ==========================================
+# SISTEMA OPERATIVO Y EDITORES
+# ==========================================
+# Evita subir archivos de configuración de tu editor o del OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# SECRETOS Y VARIABLES DE ENTORNO (CRÍTICO)
+# ==========================================
+# NUNCA subas archivos .env ni claves SSH/SSL
+.env
+*.env
+.env.local
+secrets/
+*.pem
+*.key
+*.crt
+
+# ==========================================
+# DOCKER Y HOMELAB
+# ==========================================
+# Evita subir logs pesados o volumenes locales
+*.log
+logs/
+
+# ==========================================
+# PYTHON (PARA EL SCRIPT DE LA RASPBERRY)
+# ==========================================
+# Evita subir la caché de Python y el entorno virtual
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv
+*.egg-info
+dist/
+build/
