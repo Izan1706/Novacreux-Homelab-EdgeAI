@@ -1,0 +1,36 @@
+# Immich - Galería fotográfica autohospedada (alternativa a Google Fotos)
+#
+# Immich no usa un docker-compose.yml "casero": el proyecto publica su propio
+# fichero oficial y se recomienda descargarlo directamente del repositorio,
+# junto a un .env de ejemplo, para asegurar compatibilidad entre servicios
+# (server, Postgres, Redis y el módulo de Machine Learning).
+#
+# Pasos de despliegue:
+#
+#   mkdir ./immich-app && cd ./immich-app
+#
+#   wget -O docker-compose.yml https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+#   wget -O .env https://github.com/immich-app/immich/releases/latest/download/example.env
+#
+# Edita el .env resultante y ajusta como mínimo:
+#
+#   - UPLOAD_LOCATION   -> directorio nuevo en el servidor con suficiente espacio libre
+#                          para guardar fotos/vídeos originales
+#   - DB_PASSWORD       -> contraseña personalizada. Postgres no se expone
+#                          públicamente, así que solo se usa para auth local.
+#                          Usa únicamente caracteres A-Za-z0-9 (pwgen es útil aquí)
+#                          para evitar problemas al ser procesada por Docker
+#   - TZ                -> descomenta y ajusta tu zona horaria (Europe/Madrid)
+#
+# Despliegue:
+#
+#   sudo docker compose up -d
+#
+# Esto levanta 4 contenedores: immich_server, immich_postgres, immich_redis
+# e immich_machine_learning.
+#
+# Acceso web (primer arranque -> pantalla de bienvenida):
+#
+#   http://[IP_SERVER]:2283
+#
+# Referencia oficial: https://immich.app/docs/install/docker-compose
