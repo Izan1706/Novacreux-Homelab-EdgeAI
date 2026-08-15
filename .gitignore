@@ -1,44 +1,43 @@
-# ==========================================
-# SISTEMA OPERATIVO Y EDITORES
-# ==========================================
-# Evita subir archivos de configuración de tu editor o del OS
+# Entornos virtuales de Python
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+
+# Variables de entorno / secretos
+.env
+*.env
+!*.env.example
+
+# Datos y volúmenes persistentes de los servicios (no deben subirse al repo)
+homelab/docker-compose/**/etc-pihole/
+homelab/docker-compose/**/etc-dnsmasq.d/
+homelab/docker-compose/**/data/
+homelab/docker-compose/**/immich-app/
+n8n_data/
+uptime-kuma/data/
+
+# Modelos / pesos de IA (demasiado pesados para git)
+*.hef
+*.gguf
+*.safetensors
+
+# Vídeos e imágenes de prueba generadas en tiempo de ejecución
+edge-ai/python-video-analysis/*.mp4
+edge-ai/python-video-analysis/frame_ia.jpg
+
+# Logs
+*.log
+hailort.log
+
+# Sistema
 .DS_Store
 Thumbs.db
+
+# Editores
 .vscode/
 .idea/
 *.swp
-*.swo
-*~
-
-# ==========================================
-# SECRETOS Y VARIABLES DE ENTORNO (CRÍTICO)
-# ==========================================
-# NUNCA subas archivos .env ni claves SSH/SSL
-.env
-*.env
-.env.local
-secrets/
-*.pem
-*.key
-*.crt
-
-# ==========================================
-# DOCKER Y HOMELAB
-# ==========================================
-# Evita subir logs pesados o volumenes locales
-*.log
-logs/
-
-# ==========================================
-# PYTHON (PARA EL SCRIPT DE LA RASPBERRY)
-# ==========================================
-# Evita subir la caché de Python y el entorno virtual
-__pycache__/
-*.py[cod]
-*$py.class
-venv/
-env/
-.venv
-*.egg-info
-dist/
-build/
