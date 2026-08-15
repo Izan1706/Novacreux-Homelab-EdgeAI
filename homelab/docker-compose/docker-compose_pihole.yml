@@ -1,0 +1,24 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Europe/Madrid'
+      WEBPASSWORD: 'TU_CONTRASEÑA_AQUI'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    restart: unless-stopped
+
+# Notas de despliegue:
+# 1. mkdir ~/pihole && cd ~/pihole
+# 2. Guarda este fichero como docker-compose.yml en ese directorio
+# 3. IMPORTANTE: cambia WEBPASSWORD por una contraseña segura antes de desplegar
+# 4. El puerto 53 es crítico para el servicio DNS: asegúrate de que ningún otro
+#    servicio (systemd-resolved, etc.) lo esté usando en el host antes de levantar el contenedor
+# 5. Despliegue: sudo docker compose up -d
+# 6. Acceso web: http://[IP_SERVER]:80/admin

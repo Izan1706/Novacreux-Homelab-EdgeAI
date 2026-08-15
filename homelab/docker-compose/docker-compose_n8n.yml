@@ -1,0 +1,26 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - TZ=Europe/Madrid
+      - GENERIC_TIMEZONE=Europe/Madrid
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
+
+# Notas de despliegue:
+# 1. sudo mkdir -p /opt/n8n && cd /opt/n8n
+# 2. Guarda este fichero como docker-compose.yml en ese directorio
+# 3. Despliegue: sudo docker compose up -d
+# 4. Acceso web: http://[IP_SERVER]:5678
+#
+# n8n es la herramienta de automatización/orquestación (workflows tipo Zapier
+# self-hosted) usada en este proyecto para conectar los distintos servicios de
+# IA local (Ollama, RAG con Qdrant, etc.) entre sí.

@@ -1,0 +1,18 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "3001:3001"  # Puerto para entrar a la web
+    restart: unless-stopped
+
+# Notas de despliegue:
+# 1. mkdir ~/uptime-kuma && cd ~/uptime-kuma
+# 2. Guarda este fichero como docker-compose.yml en ese directorio
+# 3. Despliegue: sudo docker compose up -d
+# 4. Acceso web: http://[IP_SERVER]:3001
+#
+# Uptime Kuma monitoriza servicios (HTTP, TCP, ping, DNS, contenedores Docker...)
+# y permite configurar notificaciones cuando un servicio cae.

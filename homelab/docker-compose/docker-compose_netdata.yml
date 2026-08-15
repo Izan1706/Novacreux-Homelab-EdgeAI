@@ -1,0 +1,57 @@
+services:
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    pid: host
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+
+# Notas de despliegue:
+# 1. Guarda este fichero como docker-compose.yml en un directorio dedicado
+#    (p.ej. ~/netdata)
+# 2. Despliegue: sudo docker compose up -d
+# 3. Acceso web: http://[IP_SERVER]:19999
+#
+# --pid=host y --network=host son necesarios para que el agente tenga
+# visibilidad directa sobre los procesos y la red del sistema anfitrión.
+# Los volúmenes /proc, /sys, etc. se montan en modo solo lectura (:ro) para
+# que Netdata pueda leer las estadísticas del sistema de forma segura, sin
+# poder modificarlas.
+#
+# Equivalente en docker run (tal y como se probó originalmente):
+#
+#   docker run -d --name=netdata \
+#     --pid=host \
+#     --network=host \
+#     -v netdataconfig:/etc/netdata \
+#     -v netdatalib:/var/lib/netdata \
+#     -v netdatacache:/var/cache/netdata \
+#     -v /etc/passwd:/etc/passwd:ro \
+#     -v /etc/group:/etc/group:ro \
+#     -v /proc:/host/proc:ro \
+#     -v /sys:/host/sys:ro \
+#     -v /etc/os-release:/host/etc/os-release:ro \
+#     -v /var/run/docker.sock:/var/run/docker.sock:ro \
+#     --restart unless-stopped \
+#     --cap-add SYS_PTRACE \
+#     --security-opt apparmor=unconfined \
+#     netdata/netdata
