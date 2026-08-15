@@ -90,7 +90,7 @@ El instalador detecta el sistema operativo y, si no encuentra Node.js
 instalado, lo instala automáticamente junto con npm antes de instalar
 OpenClaw.
 
-## 4. Open WebUI sobre la Raspberry Pi
+## 4. Open WebUI sobre la Raspberry Pi (opcional)
 
 Igual que en el PC de IA local, se puede desplegar Open WebUI como interfaz
 web para interactuar con los modelos servidos en la Pi. Ver
