@@ -1,0 +1,54 @@
+# /etc/fail2ban/jail.local
+#
+# Fail2ban monitoriza los logs del sistema en busca de intentos de login
+# fallidos repetidos (fuerza bruta) y, al detectarlos, levanta
+# automáticamente una regla de firewall que banea la IP atacante durante
+# el tiempo configurado.
+#
+# Instalación:
+#   sudo apt update && sudo apt install fail2ban -y
+#
+# Este .local se copia a partir del .conf de referencia (fail2ban siempre
+# prioriza .local sobre .conf, así el .conf original queda intacto como
+# backup):
+#   sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+#   sudo nano /etc/fail2ban/jail.local
+
+# The DEFAULT allows a global definition of the options. They can be overridden
+# in each jail afterwards.
+
+[DEFAULT]
+# bantime  = tiempo que se baneará al usuario que intente demasiadas veces el login
+# findtime = ventana de tiempo en la que se monitorean los intentos (desde el
+#            primer intento fallido)
+# maxretry = cantidad máxima de intentos permitidos dentro de "findtime"
+#            antes de aplicar el baneo
+bantime=10m
+findtime=10m
+maxretry=5
+
+#
+# SSH servers
+#
+
+[sshd]
+enabled = true
+# To use more aggressive sshd modes set filter parameter "mode" in jail.local:
+# normal (default), ddos, extra or aggressive (combines all).
+# See "tests/files/logs/sshd" or "filter.d/sshd.conf" for usage example and details.
+#mode   = normal
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+
+# Aplicar cambios y comprobar estado:
+#   sudo systemctl restart fail2ban
+#   sudo systemctl status fail2ban
+#
+# Verificación real: desde otro equipo, falla la contraseña SSH 5 veces
+# seguidas contra el servidor y confirma que la IP queda bloqueada durante
+# el "bantime" configurado.
+#
+# Nota del proyecto original: se contempla migrar en el futuro de Fail2ban a
+# CrowdSec, ya que este último comparte información de amenazas entre nodos
+# de forma distribuida en lugar de actuar solo de forma local.
